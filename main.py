@@ -41,23 +41,27 @@ list_href = []
 for anchor in items_anchor:
     list_href.append(anchor.get_attribute('href'))
 
-# Save the links in a file
+# Save the links in a file (so that we can continue testing without getting blocked by GumTree)
+# Just comment out the code above
 file = "data/list_href.txt"
 with open(file, mode="w", encoding="utf-8") as fp:
     for item in list_href:
         fp.write(f'{item}\n')
 
 
-# Open the file containing links
+# Open the file containing links, so that we can continue testing without getting blocked by GumTree.
+# Just comment out the code above during testing
 file = "data/list_href.txt"
 with open(file, mode="r", encoding="utf-8") as fp:
     list_href = fp.read().splitlines()
 print(f'{list_href = }')
 
-
+# Load each link in turn
 for href in list_href:
     driver.get(href)
 
+    # Find the first element containing the text 'GeForce' somewhere in the document
+    # See https://stackoverflow.com/questions/12323403/how-do-i-find-an-element-that-contains-specific-text-in-selenium-webdriver-pyth
     search_keywords = driver.find_element_by_xpath(
         '//*[contains(text(), \'GeForce\')]'
     )
